@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MaoGai": {
+      "commandName": "Project",
+      "workingDirectory": "$(SolutionDir)"
+    }
+  }
+}
