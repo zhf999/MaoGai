@@ -47,11 +47,8 @@ namespace MaoGai
             {
                 Console.Write(ex.ToString());
             }
-
-            int index = random.Next(0, questionList.Cnt);
-            curQuestion = questionList[index];
-
-            this.QCnt.DataContext = questionList;
+            curQuestion = questionList.Next();
+            this.InfoPanel.DataContext = questionList;
             this.QGrid.DataContext = curQuestion;
         }
 
@@ -68,9 +65,28 @@ namespace MaoGai
                 
             }
             Console.WriteLine(submittedAnswer);
-            int index = random.Next(random.Next(0,questionList.Cnt));
-            curQuestion = questionList[index];
-            questionList.RemoveAt(index);
+            curQuestion.IsNotAnswered = false;
+            if(submittedAnswer==curQuestion.answer)
+            {
+                curQuestion.ShownString = String.Format("回答正确，答案为{0}",curQuestion.answer);
+                questionList.CntCorrect++;
+            }
+            else { 
+                curQuestion.ShownString =  String.Format("回答错误，正确答案为{0}",curQuestion.answer);
+                questionList.CntWrong++;
+            }
+
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            curQuestion = questionList.Next();
+            this.QGrid.DataContext = curQuestion;
+        }
+
+        private void PrevButton_Click(object sender, RoutedEventArgs e)
+        {
+            curQuestion = questionList.Previous();
             this.QGrid.DataContext = curQuestion;
         }
     }

@@ -29,11 +29,30 @@
                                       SingleSelector="{StaticResource SingleChoiceTemplate}"/>
     </Window.Resources>
     <Grid>
-        <DockPanel>
-            <Grid DockPanel.Dock="Top" Height="75">
-                <WrapPanel>
-                    <TextBlock x:Name="QCnt" Text="{Binding Path=Cnt, StringFormat='剩余题数:{0}'}"></TextBlock>
-                </WrapPanel>
+        <DockPanel x:Name="InfoPanel">
+            <Grid DockPanel.Dock="Top" Height="75" Margin="5" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1"
+                        Margin="3">
+                    <StackPanel>
+                        <TextBlock Text="题库" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,-6"
+                                   Background="White"/>
+                        <TextBlock Margin="5,5,0,0" Text="{Binding Path=Cnt, StringFormat='剩余题数:{0}'}"/>
+                        <TextBlock Margin="5,5,0,0" Text="{Binding Path=CntCorrect,StringFormat='正确：{0}'}"/>
+                        <TextBlock Margin="5,5,0,0" Text="{Binding Path=CntWrong,StringFormat='错误：{0}'}"/>
+
+                    </StackPanel>
+                </Border>
+
+                 
             </Grid>
             <Grid x:Name="QGrid" Margin="20">
                 <Grid.RowDefinitions>
@@ -49,16 +68,21 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="75"/>
-                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="75"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Path=QuestionTitle}" Grid.Row="0" Grid.ColumnSpan="4"/>
-                <StackPanel Grid.Row="1" Grid.RowSpan ="6" Grid.Column="0" Grid.ColumnSpan="4">
+                <TextBlock Text="{Binding Path=QuestionTitle}" Grid.Row="0" Grid.ColumnSpan="6" TextWrapping="Wrap"/>
+                <StackPanel Grid.Row="1" Grid.RowSpan ="5" Grid.Column="0" Grid.ColumnSpan="6">
                     <ContentControl x:Name="ChoicesContent" Content="{Binding}" ContentTemplateSelector="{StaticResource mySelector}"
                                    />
                 </StackPanel>
-                <Button x:Name="SubmitButton" Grid.Row="7" Grid.Column="1" Click="SubmitButton_Click">确定</Button>
-                <Button x:Name="QuitButton" Grid.Row="7" Grid.Column="3">退出</Button>
+                <TextBlock x:Name="AnsDisplay" Grid.Row="6" Grid.ColumnSpan="6" Text="{Binding ShownString}"/>
+                <Button x:Name="PrevButton" Grid.Row="7" Grid.Column="1" Margin="2" Click="PrevButton_Click">上一题</Button>
+                <Button x:Name="SubmitButton" Grid.Row="7" Grid.Column="2" Margin="2" Click="SubmitButton_Click"
+                        IsEnabled="{Binding IsNotAnswered}">提交</Button>
+                <Button x:Name="NextButton" Grid.Row="7" Grid.Column="3" Margin="2" Click="NextButton_Click">下一题</Button>
+                <Button x:Name="QuitButton" Grid.Row="7" Grid.Column="4" Margin="2">退出</Button>
             </Grid>
         </DockPanel>
     </Grid>

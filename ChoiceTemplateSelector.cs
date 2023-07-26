@@ -22,12 +22,12 @@ namespace MaoGai
                 Question question = item as Question;
                 if(question.type==QuestionType.SingleSelection||question.type==QuestionType.Judge)
                 {
-                    Console.WriteLine("dan");
+                    // Console.WriteLine("dan");
                     return SingleSelector;
                 }
                 else if(question.type==QuestionType.MultiSelection)
                 {
-                    Console.WriteLine("duo");
+                    // Console.WriteLine("duo");
                     return MultiSelector;
                 }
             }

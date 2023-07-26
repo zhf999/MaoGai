@@ -18,7 +18,7 @@ namespace MaoGai
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public QuestionType type;
-        public string? questionTitle;
+        private string? questionTitle;
         public string QuestionTitle
         {
             get { return questionTitle; }
@@ -28,13 +28,32 @@ namespace MaoGai
             }
         }
 
-        public Candidates candidates;
+        private Candidates candidates;
         public Candidates Candidates {
             get { return candidates; }
             set
             {
                 candidates = value;
                 this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Candidates"));
+            }
+        }
+
+        private bool isNotAnswered;
+        public bool IsNotAnswered
+        {
+            get { return isNotAnswered;}
+            set
+            {
+                isNotAnswered = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsNotAnswered"));
+            }
+        }
+        private string shownString;
+        public string ShownString
+        {
+            get { return shownString; }
+            set
+            {
+                shownString = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs("ShownString"));
             }
         }
         public string? answer;
@@ -48,6 +67,8 @@ namespace MaoGai
             if (this.type != QuestionType.Judge)
                 this.candidates = new Candidates(jCandidcate);
             else this.candidates = new Candidates();
+
+            isNotAnswered = true;
         }
     }
 
@@ -71,8 +92,8 @@ namespace MaoGai
         {
             this.cnt = 2;
             this.choices = new Selection[2] { new Selection("对"), new Selection("错") };
-            this.choices[0].ID = "A";
-            this.choices[1].ID = "B";
+            this.choices[0].ID = "对";
+            this.choices[1].ID = "错";
         }
 
         public Candidates(JArray jArray)
@@ -123,47 +144,4 @@ namespace MaoGai
         }
     }
 
-    public class QuestionList:INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private int cnt;
-        public int Cnt
-        {
-            get
-            {
-                return this.cnt;
-            }
-            set
-            {
-                this.cnt = value;
-                this.PropertyChanged.Invoke(this,new PropertyChangedEventArgs("Cnt"));
-            }
-        }
-
-        public Question this[int index]
-        {
-            get { return Questions[index];} 
-            set { Questions[index] = value;}
-        }
-
-        public List<Question> Questions;
-
-        public QuestionList(JArray jArray)
-        {
-            Questions = new List<Question>();
-            foreach(JObject jObject in jArray)
-            {
-               Questions.Add(new Question(jObject));
-                cnt++;
-            }
-            
-        }
-
-        public void RemoveAt(int index)
-        {
-            Cnt--;
-            Questions.RemoveAt(index);
-        }
-    }
 }
