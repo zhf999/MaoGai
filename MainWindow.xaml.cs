@@ -27,29 +27,20 @@ namespace MaoGai
     {
         public QuestionList questionList;
         public Question curQuestion;
+        public TikuSelector tikuSelector;
 
         private Random random;
         public MainWindow()
         {
             InitializeComponent();
             random = new Random();
-            try
-            {
-                using (StreamReader sr = new StreamReader(@"./data/ti.json"))
-                {
-                    string jsonString;
-                    jsonString = sr.ReadToEnd();
-                    JArray jArray = JArray.Parse(jsonString);
-                    questionList = new QuestionList(jArray);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.ToString());
-            }
+
+            this.questionList = new QuestionList("ti");
+            this.tikuSelector = new TikuSelector();
             curQuestion = questionList.Next();
             this.InfoPanel.DataContext = questionList;
             this.QGrid.DataContext = curQuestion;
+            this.TikuGrid.DataContext = tikuSelector;
         }
 
 
@@ -88,6 +79,20 @@ namespace MaoGai
         {
             curQuestion = questionList.Previous();
             this.QGrid.DataContext = curQuestion;
+        }
+
+        private void SwitchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Object selected = this.TikuCombo.SelectedItem;
+            if (selected != null)
+            {
+                string fileName = selected as string;
+                this.questionList = new QuestionList(fileName);
+                this.InfoPanel.DataContext = this.questionList;
+                Console.WriteLine(questionList.Questions.Count);
+                Console.WriteLine(fileName);
+            }
+           
         }
     }
 }

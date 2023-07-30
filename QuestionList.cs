@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,17 +50,31 @@ namespace MaoGai
 
         public List<Question> Questions;
 
-        public QuestionList(JArray jArray)
+        public QuestionList(string fileName)
         {
-            Questions = new List<Question>();
-            foreach (JObject jObject in jArray)
+            cnt = 0; cntCorrect=0; cntWrong=0;
+            try
             {
-                Questions.Add(new Question(jObject));
-                cnt++;
+                using (StreamReader sr = new StreamReader(@"./data/"+fileName+".json"))
+                {
+                    string jsonString;
+                    jsonString = sr.ReadToEnd();
+                    JArray jArray = JArray.Parse(jsonString);
+                    Console.WriteLine(jArray.Count);
+                    Questions = new List<Question>();
+                    foreach (JObject jObject in jArray)
+                    {
+                        Questions.Add(new Question(jObject));
+                        cnt++;
+                    }
+                    Shuffle();
+                    index = -1;
+                }
             }
-            Shuffle();
-            index = -1;
-
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void RemoveAt(int index)
