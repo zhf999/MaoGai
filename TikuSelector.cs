@@ -16,7 +16,7 @@ namespace MaoGai
         public List<string> Tikus
         {
             get { return tikus; }
-            set { tikus = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Tikus")); }
+            set { tikus = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Tikus")); }
         }
 
 

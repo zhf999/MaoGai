@@ -32,14 +32,14 @@ namespace MaoGai
         public int CntCorrect
         {
             get { return this.cntCorrect; }
-            set { this.cntCorrect = value; this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("CntCorrect")); }
+            set { this.cntCorrect = value; this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CntCorrect")); }
         }
 
         private int cntWrong;
         public int CntWrong
         {
             get => this.cntWrong;
-            set { this.cntWrong = value; this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("CntWrong")); }
+            set { this.cntWrong = value; this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CntWrong")); }
         }
 
         public Question this[int index]
@@ -49,13 +49,15 @@ namespace MaoGai
         }
 
         public List<Question> Questions;
+        public List<Question> Wrong;
 
         public QuestionList(string fileName)
         {
-            cnt = 0; cntCorrect=0; cntWrong=0;
+            cnt = 0; cntCorrect = 0; cntWrong = 0;
+            this.Wrong = new List<Question>();
             try
             {
-                using (StreamReader sr = new StreamReader(@"./data/"+fileName+".json"))
+                using (StreamReader sr = new StreamReader(@"./data/" + fileName + ".json"))
                 {
                     string jsonString;
                     jsonString = sr.ReadToEnd();
@@ -68,13 +70,29 @@ namespace MaoGai
                         cnt++;
                     }
                     Shuffle();
-                    index = -1;
+                    index = 0 ;
                 }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public QuestionList(List<Question> list)
+        {
+            this.Wrong = new List<Question>();
+            cnt = list.Count; cntCorrect = 0; cntWrong = 0;
+            foreach(Question question in list)
+            {
+                question.IsNotAnswered = true;
+                question.ShownString = null;
+                foreach(Selection selection in question.Candidates.Choices)
+                {
+                    selection.IsSelected = false;
+                }
+            }
+            this.Questions = list;
         }
 
         public void RemoveAt(int index)
@@ -94,6 +112,11 @@ namespace MaoGai
                 Questions[k] = Questions[n];
                 Questions[n] = temp;
             }
+        }
+
+        public Question Current()
+        {
+            return Questions[index];
         }
 
         public Question Next()

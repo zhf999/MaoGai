@@ -34,7 +34,7 @@ namespace MaoGai
             set
             {
                 candidates = value;
-                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Candidates"));
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Candidates"));
             }
         }
 
@@ -44,7 +44,7 @@ namespace MaoGai
             get { return isNotAnswered;}
             set
             {
-                isNotAnswered = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsNotAnswered"));
+                isNotAnswered = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsNotAnswered"));
             }
         }
         private string shownString;
@@ -53,7 +53,7 @@ namespace MaoGai
             get { return shownString; }
             set
             {
-                shownString = value; PropertyChanged.Invoke(this, new PropertyChangedEventArgs("ShownString"));
+                shownString = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ShownString"));
             }
         }
         public string? answer;
@@ -82,7 +82,7 @@ namespace MaoGai
             get { return choices; }
             set {
                 choices = value;
-                this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Choices"));
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Choices"));
             }
         }
 
@@ -123,7 +123,7 @@ namespace MaoGai
             set
             {
                 content = value;
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Content"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Content"));
             }
         }
 
@@ -134,7 +134,7 @@ namespace MaoGai
             set
             {
                 isSelected = value;
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs("IsSelected"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsSelected"));
             }
         }
 
