@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace MaoGai
 {
@@ -67,11 +68,11 @@ namespace MaoGai
             CurQuestion.IsNotAnswered = false;
             if(submittedAnswer==CurQuestion.answer)
             {
-                CurQuestion.ShownString = String.Format("回答正确，答案为{0}",CurQuestion.answer);
+                CurQuestion.ShownString = String.Format("回答正确，正确答案为{0}，您的答案为{1}",CurQuestion.answer,submittedAnswer);
                 QuestionList.CntCorrect++;
             }
             else { 
-                CurQuestion.ShownString =  String.Format("回答错误，正确答案为{0}",CurQuestion.answer);
+                CurQuestion.ShownString =  String.Format("回答错误，正确答案为{0}，您的答案为{1}",CurQuestion.answer,submittedAnswer);
                 QuestionList.CntWrong++;
                 QuestionList.Wrong.Add(CurQuestion);
             }
@@ -92,6 +93,16 @@ namespace MaoGai
 
         private void SwitchButton_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult boxResult = MessageBox.Show(this,"切换题库将彻底覆盖当前题库，是否继续？", "警告",
+                MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if(boxResult==MessageBoxResult.OK)
+            {
+                this.SwitchTiku(sender,e);
+            }
+        }
+
+        private void SwitchTiku(object sender, RoutedEventArgs e)
+        {
             Object selected = this.TikuCombo.SelectedItem;
             if (selected != null)
             {
@@ -102,13 +113,17 @@ namespace MaoGai
                 Console.WriteLine(fileName);
                 this.NextButton_Click(sender, e);
             }
-           
         }
 
         private void WrongButton_Click(object sender, RoutedEventArgs e)
         {
-            this.QuestionList = new QuestionList(this.QuestionList.Wrong);
-            this.CurQuestion = this.QuestionList.Current();
+            MessageBoxResult boxResult = MessageBox.Show(this, "切换至错题将彻底覆盖当前题库，是否继续？", "警告",
+            MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if(boxResult==MessageBoxResult.OK)
+            {
+                this.QuestionList = new QuestionList(this.QuestionList.Wrong);
+                this.CurQuestion = this.QuestionList.Current();
+            }
         }
     }
 }

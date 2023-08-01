@@ -11,7 +11,8 @@
             <ListBox ItemsSource="{Binding Candidates.Choices}" HorizontalAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Content="{Binding Content}" IsChecked="{Binding IsSelected}" GroupName="SingleChoiceGroup"/>
+                        <RadioButton Content="{Binding Content}" IsChecked="{Binding IsSelected}" GroupName="SingleChoiceGroup"
+                                     FontFamily="楷体" FontSize="18"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -20,7 +21,8 @@
             <ListBox ItemsSource="{Binding Candidates.Choices}" HorizontalAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <CheckBox Content="{Binding Content}" IsChecked="{Binding IsSelected}"/>
+                        <CheckBox Content="{Binding Content}" IsChecked="{Binding IsSelected}"
+                                  FontFamily="楷体" FontSize="16"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -28,6 +30,7 @@
         <local:ChoiceTemplateSelector x:Key="mySelector" MultiSelector="{StaticResource MultiChoiceTemplate}" 
                                       SingleSelector="{StaticResource SingleChoiceTemplate}"/>
         <local:NoZeroConverter x:Key="NoZeroConverter"/>
+        <local:FontColorConverter x:Key="FontColorConverter"/>
     </Window.Resources>
     <Grid>
         <DockPanel x:Name="InfoPanel">
@@ -44,8 +47,8 @@
                 <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1"
                         Margin="3">
                     <StackPanel>
-                        <TextBlock Text="题库" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="3,-6"
-                                   Background="White"/>
+                        <TextBlock Text="答题情况" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,-8"
+                                   Background="White" FontFamily="黑体" FontSize="12"/>
                         <TextBlock Margin="5,5,0,0" Text="{Binding Path=Cnt, StringFormat='剩余题数:{0}'}"/>
                         <TextBlock Margin="5,5,0,0" Text="{Binding Path=CntCorrect,StringFormat='正确：{0}'}"/>
                         <TextBlock Margin="5,5,0,0" Text="{Binding Path=CntWrong,StringFormat='错误：{0}'}"/>
@@ -62,6 +65,9 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
+                        <TextBlock Grid.RowSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                                   Margin="6,-8" Background="White" Text="题库选择" 
+                                   FontFamily="黑体" FontSize="12"/>
                         <ComboBox x:Name="TikuCombo" Grid.Column="0" Grid.RowSpan="2"
                                   Margin="20,20" ItemsSource="{Binding Tikus}"></ComboBox>
                         <Button x:Name="SwitchButton" Grid.Column="1" Grid.Row="0" Margin="10,5"  
@@ -81,7 +87,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.1*"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -91,12 +97,14 @@
                     <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="75"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Path=QuestionTitle}" Grid.Row="0" Grid.ColumnSpan="6" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding Path=QuestionTitle}" Grid.Row="0" Grid.ColumnSpan="6" TextWrapping="Wrap"
+                           FontSize="18" FontFamily="仿宋" FontWeight="Bold"/>
                 <StackPanel Grid.Row="1" Grid.RowSpan ="5" Grid.Column="0" Grid.ColumnSpan="6">
                     <ContentControl x:Name="ChoicesContent" Content="{Binding}" ContentTemplateSelector="{StaticResource mySelector}"
                                    />
                 </StackPanel>
-                <TextBlock x:Name="AnsDisplay" Grid.Row="6" Grid.ColumnSpan="6" Text="{Binding ShownString}"/>
+                <TextBlock x:Name="AnsDisplay" Grid.Row="6" Grid.ColumnSpan="6" Text="{Binding ShownString}"
+                           FontFamily="黑体" FontSize="16" FontWeight="Bold" Foreground="{Binding Path=ShownString, Converter={StaticResource FontColorConverter}}"/>
                 <Button x:Name="PrevButton" Grid.Row="7" Grid.Column="1" Margin="2" Click="PrevButton_Click">上一题</Button>
                 <Button x:Name="SubmitButton" Grid.Row="7" Grid.Column="2" Margin="2" Click="SubmitButton_Click"
                         IsEnabled="{Binding IsNotAnswered}">提交</Button>
