@@ -125,5 +125,16 @@ namespace MaoGai
                 this.CurQuestion = this.QuestionList.Current();
             }
         }
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("本软件基于MIT协议开源于https://github.com/zhf999/MaoGai\n" +
+                "请宣传时保证对方zhf-xdu.top下载以维护原作者利益\n" +
+                "by 周洪锋","关于", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void QuitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

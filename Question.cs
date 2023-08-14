@@ -62,8 +62,8 @@ namespace MaoGai
         {
             type = (QuestionType)jObject["type"].ToObject<int>();
             this.questionTitle = jObject["title"].ToString();
-            this.answer = jObject["anser"].ToString();
-            JArray jCandidcate = jObject["cadidate"].ToObject<JArray>();
+            this.answer = jObject["answer"].ToString();
+            JArray jCandidcate = jObject["candidate"].ToObject<JArray>();
             if (this.type != QuestionType.Judge)
                 this.candidates = new Candidates(jCandidcate);
             else this.candidates = new Candidates();
