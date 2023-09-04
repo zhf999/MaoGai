@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MaoGai</id>
+    <version>1.0.0</version>
+    <authors>MaoGai</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0-windows7.0">
+        <dependency id="Newtonsoft.Json" version="13.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net6.0-windows7.0">
+        <frameworkReference name="Microsoft.WindowsDesktop.App.WPF" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="F:\Programming\MaoGai\bin\Debug\net6.0-windows\MaoGai.runtimeconfig.json" target="lib\net6.0-windows7.0\MaoGai.runtimeconfig.json" />
+    <file src="F:\Programming\MaoGai\bin\Debug\net6.0-windows\MaoGai.dll" target="lib\net6.0-windows7.0\MaoGai.dll" />
+  </files>
+</package>

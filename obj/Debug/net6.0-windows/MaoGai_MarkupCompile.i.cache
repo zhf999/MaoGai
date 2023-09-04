@@ -1,7 +1,7 @@
 ﻿MaoGai
 1.0.0.0
 
-exe
+winexe
 C#
 .cs
 F:\Programming\MaoGai\obj\Debug\net6.0-windows\
@@ -16,5 +16,5 @@ F:\Programming\MaoGai\App.xaml
 195-762717053
 MainWindow.xaml;
 
-False
+True
 
